@@ -21,7 +21,7 @@ const item = 'LG UltraGear 27GP850-B';
   await page.keyboard.press('Enter');
   //   await page.focus('.cat-prod-row__body');
   await page.evaluate(() => {
-    [...document.querySelectorAll('.elements button')]
+    [...document.querySelectorAll('button')]
       .find(element => element.textContent === 'Porównaj ceny')
       .click();
   });
