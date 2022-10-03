@@ -21,7 +21,7 @@ export const getData = async () => {
   }
 };
 
-export const uploadScreenshots = async data => {
+export const uploadScreenshots = async (data, res) => {
   try {
     const client = await clientPromise;
     const db = await client.db();
@@ -29,8 +29,19 @@ export const uploadScreenshots = async data => {
     db.collection('images').insertOne(data);
     // res.status(200).json({ data, name: 'successfully connected to database' });
   } catch (err) {
-    res.status(500).json({ message: `err: ${err}` });
+    // res.status(500).json({ message: `err: ${err}` });
+    console.error('error !!!!!!!', err);
   }
 };
 
-// await uploadScreenshots({ image: 'image of monitor' });
+export const deleteAll = async data => {
+  try {
+    const client = await clientPromise;
+    const db = await client.db();
+    db.collection('images').deleteMany({});
+  } catch (err) {
+    console.error('error !!!', err);
+  }
+};
+
+// deleteAll();
