@@ -13,10 +13,12 @@ const app = express();
 app.use(express.static('public'));
 app.set('port', 3000);
 
-scheduledFunctions();
-
 app.listen(app.get('port'), () => {
   console.log('listening on port 300');
+});
+
+app.get('/scrape', (req, res) => {
+  scheduledFunctions();
 });
 
 app.get('/', (req, res) => {
