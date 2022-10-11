@@ -58,33 +58,37 @@ app.get('/getAndReplace', async (req, res) => {
 
 //! puppeteer
 export const getPrice = async () => {
-  const browser = await puppeteer.launch({
-    // headless: false,
-    defaultViewport: {
-      width: 1920,
-      height: 1080,
-    },
-  });
+  try {
+    const browser = await puppeteer.launch({
+      // headless: false,
+      defaultViewport: {
+        width: 1920,
+        height: 1080,
+      },
+    });
 
-  const page = await browser.newPage();
-  await page.setUserAgent(
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36'
-  );
-  await page.goto(url);
-  await page.focus('#form-head-search-q');
-  await page.keyboard.type(item);
-  await page.keyboard.press('Tab');
-  await page.keyboard.press('Enter');
-  await page.waitForSelector('.js_seoUrl');
-  const photo1 = await page.screenshot({});
-  await page.click('.js_seoUrl');
-  await page.waitForTimeout(500);
-  const photo2 = await page.screenshot({});
+    const page = await browser.newPage();
+    await page.setUserAgent(
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36'
+    );
+    await page.goto(url);
+    await page.focus('#form-head-search-q');
+    await page.keyboard.type(item);
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Enter');
+    await page.waitForSelector('.js_seoUrl');
+    const photo1 = await page.screenshot({});
+    await page.click('.js_seoUrl');
+    await page.waitForTimeout(500);
+    const photo2 = await page.screenshot({});
 
-  const photo1base64 = await photo1.toString('base64');
-  const photo2base64 = await photo1.toString('base64');
-  await browser.close();
-  return { photo1base64, photo2base64 };
+    const photo1base64 = await photo1.toString('base64');
+    const photo2base64 = await photo1.toString('base64');
+    await browser.close();
+    return { photo1base64, photo2base64 };
+  } catch (error) {
+    console.log('error getting price', error);
+  }
 };
 
 //! puppeteer
