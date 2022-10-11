@@ -78,9 +78,9 @@ export const getPrice = async () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
 
-    await page.waitForSelector('.js_seoUrl');
+    // await page.waitForSelector('.js_seoUrl');
     const photo1 = await page.screenshot({});
-    await page.click('.js_seoUrl');
+    // await page.click('.js_seoUrl');
     await page.waitForTimeout(500);
     const photo2 = await page.screenshot({});
 
