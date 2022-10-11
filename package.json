@@ -20,6 +20,7 @@
     "mongodb": "^4.10.0",
     "mongoose": "^6.6.2",
     "node-cron": "^3.0.2",
-    "puppeteer": "^18.0.5"
+    "puppeteer-extra": "^3.3.4",
+    "puppeteer-extra-plugin-stealth": "^2.11.1"
   }
 }

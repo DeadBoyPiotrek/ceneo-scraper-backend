@@ -1,4 +1,6 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+puppeteer.use(StealthPlugin());
 import express from 'express';
 import scheduledFunctions from './scheduledFunctions/function1.js';
 import {
@@ -6,7 +8,6 @@ import {
   uploadScreenshots,
   replaceScreenshots,
 } from './mongoDB/mongodb2.js';
-import e from 'express';
 
 const url = 'https://www.ceneo.pl/';
 //! change this to something else 😵🐊
@@ -77,15 +78,15 @@ export const getPrice = async () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
 
-    // await page.waitForSelector('.js_seoUrl');
+    await page.waitForSelector('.js_seoUrl');
     const photo1 = await page.screenshot({});
-    // await page.click('.js_seoUrl');
-    // await page.waitForTimeout(500);
-    // const photo2 = await page.screenshot({});
+    await page.click('.js_seoUrl');
+    await page.waitForTimeout(500);
+    const photo2 = await page.screenshot({});
 
     const photo1base64 = await photo1.toString('base64');
-    // const photo2base64 = await photo2.toString('base64');
-    const photo2base64 = photo1base64;
+    const photo2base64 = await photo2.toString('base64');
+    // const photo2base64 = photo1base64;
     await browser.close();
     return { photo1base64, photo2base64 };
   } catch (error) {
