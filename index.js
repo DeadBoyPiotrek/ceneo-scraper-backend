@@ -83,7 +83,7 @@ export const getPrice = async () => {
     const photo2 = await page.screenshot({});
 
     const photo1base64 = await photo1.toString('base64');
-    const photo2base64 = await photo1.toString('base64');
+    const photo2base64 = await photo2.toString('base64');
     await browser.close();
     return { photo1base64, photo2base64 };
   } catch (error) {
