@@ -1,6 +1,8 @@
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 puppeteer.use(StealthPlugin());
+import UserAgent from 'user-agents';
+const userAgent = new UserAgent();
 import express from 'express';
 import scheduledFunctions from './scheduledFunctions/function1.js';
 import {
@@ -71,9 +73,7 @@ export const getPrice = async () => {
     });
 
     const page = await browser.newPage();
-    await page.setUserAgent(
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36'
-    );
+    await page.setUserAgent(userAgent.random().toString());
     await page.goto(url);
     await page.focus('#form-head-search-q');
     await page.keyboard.type(item);
