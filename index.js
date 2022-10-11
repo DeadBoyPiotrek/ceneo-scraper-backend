@@ -59,6 +59,8 @@ app.get('/getAndReplace', async (req, res) => {
 
 //! puppeteer
 export const getPrice = async () => {
+  let photo1base64;
+  let photo2base64;
   try {
     const browser = await puppeteer.launch({
       // headless: false,
@@ -78,19 +80,28 @@ export const getPrice = async () => {
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
 
-    // await page.waitForSelector('.js_seoUrl');
     const photo1 = await page.screenshot({});
-    // await page.click('.js_seoUrl');
+    photo1base64 = await photo1.toString('base64');
+    await page.waitForSelector('.js_seoUrl');
+    await page.click('.js_seoUrl');
     await page.waitForTimeout(500);
     const photo2 = await page.screenshot({});
 
-    const photo1base64 = await photo1.toString('base64');
-    const photo2base64 = await photo2.toString('base64');
+    photo2base64 = await photo2.toString('base64');
     // const photo2base64 = photo1base64;
     await browser.close();
     return { photo1base64, photo2base64 };
   } catch (error) {
     console.log('error getting price', error);
+    if (photo1base64) {
+      if (photo2base64) {
+        console.log('first if');
+        return { photo1base64, photo2base64 };
+      }
+      console.log('second if');
+      return { photo1base64, photo2base64: 'photo2' };
+    }
+    return { photo1base64: 'doesn"t', photo2base64: 'work' };
   }
 };
 
