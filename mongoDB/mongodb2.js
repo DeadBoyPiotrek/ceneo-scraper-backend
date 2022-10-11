@@ -34,7 +34,7 @@ export const uploadScreenshots = async (data, res) => {
   }
 };
 
-export const deleteAll = async data => {
+export const deleteAll = async () => {
   try {
     const client = await clientPromise;
     const db = await client.db();

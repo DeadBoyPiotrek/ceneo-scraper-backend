@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer';
 import express from 'express';
 import scheduledFunctions from './scheduledFunctions/function1.js';
+import { deleteAll } from './mongoDB/mongodb2.js';
 
 const url = 'https://www.ceneo.pl/';
 //! change this to something else 😵🐊
@@ -19,6 +20,11 @@ app.listen(app.get('port'), () => {
 
 app.get('/scrape', (req, res) => {
   scheduledFunctions();
+  res.send('scheduledFunctions started');
+});
+app.get('/deleteAll', (req, res) => {
+  deleteAll();
+  res.send('deleteAll');
 });
 
 app.get('/', (req, res) => {
