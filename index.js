@@ -9,21 +9,21 @@ const item = 'rtx 3060';
 //! change this to something else 😵🐊
 
 //* express
-
+const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.static('public'));
-app.set('port', 3000);
+app.set('port', PORT);
 
 app.listen(app.get('port'), () => {
-  console.log('listening on port 300');
+  console.log(`listening on port ${PORT}`);
 });
 
 app.get('/scrape', (req, res) => {
   scheduledFunctions();
   res.send('scheduledFunctions started');
 });
-app.get('/deleteAll', (req, res) => {
-  deleteAll();
+app.get('/deleteAll', async (req, res) => {
+  await deleteAll();
   res.send('deleteAll');
 });
 
