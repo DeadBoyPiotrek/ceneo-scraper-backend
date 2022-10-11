@@ -21,7 +21,7 @@ export const getData = async () => {
   }
 };
 
-export const uploadScreenshots = async (data, res) => {
+export const uploadScreenshots = async data => {
   try {
     const client = await clientPromise;
     const db = await client.db();
@@ -44,4 +44,12 @@ export const deleteAll = async () => {
   }
 };
 
-// deleteAll();
+export const replaceScreenshots = async data => {
+  try {
+    const client = await clientPromise;
+    const db = await client.db();
+    db.collection('images').replaceOne({}, { data, date: new Date() });
+  } catch (err) {
+    console.error('error !!!', err);
+  }
+};
