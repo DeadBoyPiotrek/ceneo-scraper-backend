@@ -61,8 +61,8 @@ app.get('/getAndReplace', async (req, res) => {
 
 //! puppeteer
 export const getPrice = async () => {
-  let photo1base64;
-  let photo2base64;
+  let photo1base64 = 'photo1base64.jpg';
+  let photo2base64 = 'photo2base64.jpg';
   try {
     const browser = await puppeteer.launch({
       // headless: false,
@@ -99,9 +99,9 @@ export const getPrice = async () => {
         return { photo1base64, photo2base64 };
       }
       console.log('second if');
-      return { photo1base64, photo2base64: 'photo2' };
+      return { photo1base64, photo2base64 };
     }
-    return { photo1base64: 'doesn"t', photo2base64: 'work' };
+    return { photo1base64, photo2base64 };
   }
 };
 
