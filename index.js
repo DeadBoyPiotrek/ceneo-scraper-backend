@@ -1,10 +1,5 @@
-import puppeteer from 'puppeteer-extra';
-import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-puppeteer.use(StealthPlugin());
-import UserAgent from 'user-agents';
-const userAgent = new UserAgent();
 import express from 'express';
-import scheduledFunctions from './scheduledFunctions/function1.js';
+import { getPrice } from './puppeteer/puppeteerFunctions.js';
 import {
   deleteAll,
   uploadScreenshots,
@@ -49,7 +44,7 @@ app.get('/getAndPost', async (req, res) => {
 });
 app.get('/getAndReplace', async (req, res) => {
   try {
-    const photos = await getPrice();
+    const photos = await getPrice(url, item);
     await replaceScreenshots(photos);
     res.send('replacePrice done');
   } catch (error) {
@@ -58,51 +53,3 @@ app.get('/getAndReplace', async (req, res) => {
 });
 
 //* express
-
-//! puppeteer
-export const getPrice = async () => {
-  let photo1base64 = 'photo1base64.jpg';
-  let photo2base64 = 'photo2base64.jpg';
-  try {
-    const browser = await puppeteer.launch({
-      // headless: false,
-      defaultViewport: {
-        width: 1920,
-        height: 1080,
-      },
-    });
-
-    const page = await browser.newPage();
-    await page.setUserAgent(userAgent.random().toString());
-    await page.goto(url);
-    const photo1 = await page.screenshot({});
-    photo1base64 = await photo1.toString('base64');
-    await page.focus('#form-head-search-q');
-    await page.keyboard.type(item);
-    await page.keyboard.press('Tab');
-    await page.keyboard.press('Enter');
-
-    await page.waitForSelector('.js_seoUrl');
-    await page.click('.js_seoUrl');
-    await page.waitForTimeout(500);
-    const photo2 = await page.screenshot({});
-
-    photo2base64 = await photo2.toString('base64');
-    // const photo2base64 = photo1base64;
-    await browser.close();
-    return { photo1base64, photo2base64 };
-  } catch (error) {
-    console.log('error getting price', error);
-    if (photo1base64) {
-      if (photo2base64) {
-        console.log('first if');
-        return { photo1base64, photo2base64 };
-      }
-      console.log('second if');
-      return { photo1base64, photo2base64 };
-    }
-    return { photo1base64, photo2base64 };
-  }
-};
-
-//! puppeteer
