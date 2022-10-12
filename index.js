@@ -75,13 +75,13 @@ export const getPrice = async () => {
     const page = await browser.newPage();
     await page.setUserAgent(userAgent.random().toString());
     await page.goto(url);
+    const photo1 = await page.screenshot({});
+    photo1base64 = await photo1.toString('base64');
     await page.focus('#form-head-search-q');
     await page.keyboard.type(item);
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
 
-    const photo1 = await page.screenshot({});
-    photo1base64 = await photo1.toString('base64');
     await page.waitForSelector('.js_seoUrl');
     await page.click('.js_seoUrl');
     await page.waitForTimeout(500);
