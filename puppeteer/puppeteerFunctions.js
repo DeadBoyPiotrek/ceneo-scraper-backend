@@ -8,8 +8,9 @@ const userAgent = new UserAgent();
 export const getPrice = async (url, item) => {
   const photos = [];
   const browser = await puppeteer.launch({
-    //   headless: false,
     //   args: ['--proxy-server=http://91.234.127.222:53281'],
+    headless: true,
+    args: ['--no-sandbox'],
     defaultViewport: {
       width: 1920,
       height: 1080,
