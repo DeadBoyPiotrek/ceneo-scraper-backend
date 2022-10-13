@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
 });
 app.get('/getAndPost', async (req, res) => {
   try {
-    const photos = await getPrice();
+    const photos = await getPrice(url, item);
     await uploadScreenshots(photos);
     res.send('getPrice done');
   } catch (error) {

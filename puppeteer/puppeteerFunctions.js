@@ -7,18 +7,17 @@ const userAgent = new UserAgent();
 
 export const getPrice = async (url, item) => {
   const photos = [];
+  const browser = await puppeteer.launch({
+    //   headless: false,
+    //   args: ['--proxy-server=http://91.234.127.222:53281'],
+    defaultViewport: {
+      width: 1920,
+      height: 1080,
+    },
+  });
+
+  const page = (await browser.pages())[0];
   try {
-    const browser = await puppeteer.launch({
-      //   headless: false,
-      //   args: ['--proxy-server=http://91.234.127.222:53281'],
-      defaultViewport: {
-        width: 1920,
-        height: 1080,
-      },
-    });
-
-    const page = (await browser.pages())[0];
-
     await page.setUserAgent(userAgent.random().toString());
 
     await page.goto('https://whatismyipaddress.com/');
