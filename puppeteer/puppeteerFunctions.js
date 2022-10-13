@@ -18,30 +18,29 @@ export const getPrice = async (url, item) => {
 
   const page = (await browser.pages())[0];
   try {
-    await page.setUserAgent(userAgent.random().toString());
+    await page.setUserAgent(userAgent.random().toString());?
 
     await page.goto('https://whatismyipaddress.com/');
-    await photos.push(await makeScreenshot(page));
+    photos.push(await makeScreenshot(page));
     await page.goto(url);
     // const photo1 = await page.screenshot({});
     // const photo1base64 = await photo1.toString('base64');
-    await photos.push(await makeScreenshot(page));
+    photos.push(await makeScreenshot(page));
     await page.focus('#form-head-search-q');
     await page.keyboard.type(item);
     await page.keyboard.press('Tab');
     await page.keyboard.press('Enter');
 
-    await photos.push(await makeScreenshot(page));
+    photos.push(await makeScreenshot(page));
     await page.waitForSelector('.js_seoUrl');
     await page.click('.js_seoUrl');
     await page.waitForTimeout(500);
-    await photos.push(await makeScreenshot(page));
+    photos.push(await makeScreenshot(page));
     // const photo2 = await page.screenshot({});
     // photo2base64 = await photo2.toString('base64');
     await browser.close();
     return photos;
   } catch (error) {
-    await photos.push(await makeScreenshot(page));
     console.log('error getting price', error);
     return photos;
   }
