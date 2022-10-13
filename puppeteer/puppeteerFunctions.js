@@ -18,7 +18,7 @@ export const getPrice = async (url, item) => {
 
   const page = (await browser.pages())[0];
   try {
-    await page.setUserAgent(userAgent.random().toString());?
+    await page.setUserAgent(userAgent.random().toString());
 
     await page.goto('https://whatismyipaddress.com/');
     photos.push(await makeScreenshot(page));
