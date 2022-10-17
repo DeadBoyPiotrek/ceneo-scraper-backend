@@ -7,7 +7,7 @@ const options = {};
 const client = new MongoClient(uri, options);
 const clientPromise = client.connect();
 
-export const getData = async () => {
+export const downloadData = async () => {
   try {
     const client = await clientPromise;
     const db = await client.db();
@@ -20,8 +20,18 @@ export const getData = async () => {
     return e?.message;
   }
 };
+export const deleteData = async (req, res) => {
+  try {
+    const client = await clientPromise;
+    const db = await client.db();
+    db.collection('images').deleteMany({});
+    res.send('delete all');
+  } catch (err) {
+    console.error('error !!!', err);
+  }
+};
 
-export const uploadScreenshots = async data => {
+export const uploadData = async data => {
   try {
     const client = await clientPromise;
     const db = await client.db();
@@ -34,17 +44,7 @@ export const uploadScreenshots = async data => {
   }
 };
 
-export const deleteAll = async () => {
-  try {
-    const client = await clientPromise;
-    const db = await client.db();
-    db.collection('images').deleteMany({});
-  } catch (err) {
-    console.error('error !!!', err);
-  }
-};
-
-export const replaceScreenshots = async data => {
+export const replaceData = async data => {
   try {
     const client = await clientPromise;
     const db = await client.db();
