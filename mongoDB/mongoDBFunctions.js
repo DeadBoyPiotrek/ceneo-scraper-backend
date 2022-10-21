@@ -31,12 +31,12 @@ export const deleteData = async (req, res) => {
   }
 };
 
-export const uploadData = async data => {
+export const uploadData = async (data, product) => {
   try {
     const client = await clientPromise;
     const db = await client.db();
 
-    db.collection('images').insertOne({ data, date: new Date() });
+    db.collection(product).insertOne({ data, date: new Date() });
     // res.status(200).json({ data, name: 'successfully connected to database' });
   } catch (err) {
     // res.status(500).json({ message: `err: ${err}` });
@@ -44,11 +44,11 @@ export const uploadData = async data => {
   }
 };
 
-export const replaceData = async data => {
+export const replaceData = async (data, product) => {
   try {
     const client = await clientPromise;
     const db = await client.db();
-    db.collection('images').replaceOne({}, { data, date: new Date() });
+    db.collection(product).replaceOne({}, { data, date: new Date() });
   } catch (err) {
     console.error('error !!!', err);
   }

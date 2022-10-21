@@ -1,16 +1,10 @@
-import { scrapeItemPrices } from './puppeteer/puppeteerFunctions.js';
+import { replaceItemsForProduct } from './helpers/helpersFunctions.js';
 
 export const getAndReplaceItemPrices = async (req, res) => {
-  const itemName = req.query.item || 'rx 6600';
+  const items = req.query;
 
-  const data = await scrapeItemPrices(itemName);
-  // console.log(data);
-  res.send('lol');
+  const nestedArr = Object.entries(items);
+  nestedArr.forEach(async arr => await replaceItemsForProduct(arr[1]));
+
+  res.send('<h1>Item scraped successfully</h1>');
 };
-/* 
-    ! gets item name from url query
-      - open ceneo website
-      - search for item 
-      - get link to photo, title, price of first 5 items
-      - sends it to database 
- */
