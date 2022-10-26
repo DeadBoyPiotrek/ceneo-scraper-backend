@@ -8,7 +8,7 @@ export const scrapeItemPrices = async itemName => {
   const ceneoUrl = 'https://www.ceneo.pl/';
 
   const browser = await puppeteer.launch({
-    headless: false,
+    // headless: false,
     args: ['--no-sandbox'],
     // defaultViewport: {
     //   width: 1920,
