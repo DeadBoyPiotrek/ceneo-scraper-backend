@@ -21,7 +21,9 @@ export const scrapeItemPrices = async itemName => {
   await page.setUserAgent(userAgent.random().toString());
   try {
     await page.goto(ceneoUrl);
-    await page.waitForTimeout(500);
+    //TODO change wait for timeout to smth else
+    // await page.waitForTimeout(500);
+    await page.waitForSelector('#form-head-search-q');
     await page.type('#form-head-search-q', itemName);
 
     const searchButton = await page.$('.header-search__button__text');
@@ -29,6 +31,9 @@ export const scrapeItemPrices = async itemName => {
 
     // select all items
     //TODO change wait for timeout to smth else
+    await page.waitForSelector(
+      '.category-list > .category-list-body > .js_category-list-item'
+    );
     await page.waitForTimeout(3000);
     const sectionHandle = await page.$$(
       '.category-list > .category-list-body > .js_category-list-item'
@@ -36,7 +41,7 @@ export const scrapeItemPrices = async itemName => {
 
     // if we got something
     if (sectionHandle.length > 0) {
-      // get just 5 first items
+      // get just first X items
       const items = [];
       if (sectionHandle.length >= 5) {
         for (let i = 0; i < 5; i++) {
@@ -69,6 +74,7 @@ export const scrapeItemPrices = async itemName => {
 
           item
         );
+
         const itemImageUrl = await page.evaluate(
           element =>
             element.querySelector(

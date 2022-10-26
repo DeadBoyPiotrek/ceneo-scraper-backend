@@ -20,27 +20,14 @@ export const downloadData = async () => {
     return e?.message;
   }
 };
-export const deleteData = async (req, res) => {
+export const deleteData = async product => {
   try {
     const client = await clientPromise;
     const db = await client.db();
-    db.collection('images').deleteMany({});
-    res.send('delete all');
+    db.collection(product).deleteMany({});
+    db.collection(product).drop();
   } catch (err) {
     console.error('error !!!', err);
-  }
-};
-
-export const uploadData = async (data, product) => {
-  try {
-    const client = await clientPromise;
-    const db = await client.db();
-
-    db.collection(product).insertOne({ data, date: new Date() });
-    // res.status(200).json({ data, name: 'successfully connected to database' });
-  } catch (err) {
-    // res.status(500).json({ message: `err: ${err}` });
-    console.error('error !!!!!!!', err);
   }
 };
 
@@ -48,7 +35,13 @@ export const replaceData = async (data, product) => {
   try {
     const client = await clientPromise;
     const db = await client.db();
-    db.collection(product).replaceOne({}, { data, date: new Date() });
+    const num = await db.collection(product).count();
+
+    if (num === 0) {
+      db.collection(product).insertOne({ data, date: new Date() });
+    } else {
+      db.collection(product).replaceOne({}, { data, date: new Date() });
+    }
   } catch (err) {
     console.error('error !!!', err);
   }
