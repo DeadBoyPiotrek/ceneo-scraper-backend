@@ -1,11 +1,12 @@
-import { getAndReplaceItemPrices, removeItem } from './scraper.js';
-
+import { postAndReplaceItemPrices, removeItem } from './scraper.js';
+import bodyParser from 'body-parser';
+const jsonParser = bodyParser.json();
 const routes = app => {
   app.get('/', (req, res) => {
     res.send('hello');
   });
-  app.get('/getAndReplace', getAndReplaceItemPrices);
-  app.get('/deleteData', removeItem);
+  app.post('/postAndReplace', jsonParser, postAndReplaceItemPrices);
+  app.post('/deleteData', jsonParser, removeItem);
 };
 
 export default routes;

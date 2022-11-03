@@ -1,19 +1,39 @@
 import { replaceItemsForProduct } from './helpers/helpersFunctions.js';
 import { deleteData } from './mongoDB/mongoDBFunctions.js';
 
-export const getAndReplaceItemPrices = async (req, res) => {
-  const items = req.query;
-  const nestedArr = Object.entries(items);
-  for await (const arr of nestedArr) {
-    await replaceItemsForProduct(arr[1]);
+export const postAndReplaceItemPrices = async (req, res) => {
+  try {
+    const products = req.body.products;
+    // console.log('products', products);
+    // const nestedArr = Object.entries(items);
+    for await (const product of products) {
+      await replaceItemsForProduct(product);
+    }
+    res.send('<h1>Items scraped successfully</h1>');
+  } catch (error) {
+    console.error(error);
+    res.send('<h1>Something went wrong replacing Items</h1>');
   }
-  res.send('<h1>Items scraped successfully</h1>');
 };
 
 export const removeItem = async (req, res) => {
-  const items = req.query;
-  const nestedArr = Object.entries(items);
-  console.log('nestedArr', nestedArr);
-  nestedArr.forEach(async arr => await deleteData(arr[1]));
-  res.send('<h1>Items deleted successfully</h1>');
+  try {
+    const products = req.body.products;
+    // console.log('products', products);
+    const errors = [];
+    for await (const product of products) {
+      const result = await deleteData(product);
+      if (result) {
+        errors.push(result);
+      }
+    }
+    if (errors.length > 0) {
+      res.send('<h1>Something went wrong deleting Items</h1>');
+    } else {
+      res.send('<h1>Items deleted successfully</h1>');
+    }
+  } catch (error) {
+    console.error(error);
+    res.send('<h1>Something went wrong deleting Items</h1>');
+  }
 };
