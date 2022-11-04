@@ -27,7 +27,7 @@ export const deleteData = async product => {
     await db.collection(product).deleteMany({});
     await db.collection(product).drop();
   } catch (err) {
-    console.error('error !!! in deleteData');
+    console.error('error !!! in deleteData', err);
     return err;
   }
 };

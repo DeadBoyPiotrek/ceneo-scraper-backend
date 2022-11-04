@@ -4,8 +4,7 @@ import { deleteData } from './mongoDB/mongoDBFunctions.js';
 export const postAndReplaceItemPrices = async (req, res) => {
   try {
     const products = req.body.products;
-    // console.log('products', products);
-    // const nestedArr = Object.entries(items);
+    console.log('products', products);
     for await (const product of products) {
       await replaceItemsForProduct(product);
     }
