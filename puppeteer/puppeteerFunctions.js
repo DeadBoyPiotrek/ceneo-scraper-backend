@@ -21,7 +21,10 @@ export const scrapeItemPrices = async itemName => {
   await page.setUserAgent(userAgent.random().toString());
   try {
     await page.goto(ceneoUrl);
-    await page.waitForSelector('#form-head-search-q');
+    // delay for 2 seconds
+    await page.waitForTimeout(2000);
+    //TODO why this doesn't work?
+    // await page.waitForSelector('#form-head-search-q');
     await page.type('#form-head-search-q', itemName);
 
     const searchButton = await page.$('.header-search__button__text');
