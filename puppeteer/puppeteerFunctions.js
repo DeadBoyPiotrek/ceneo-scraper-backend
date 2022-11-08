@@ -30,7 +30,7 @@ export const scrapeItemPrices = async itemName => {
     const searchButton = await page.$('.header-search__button__text');
     await searchButton.click();
 
-    // select all i tems
+    // select all items
 
     await page.waitForSelector(
       '.category-list > .category-list-body > .js_category-list-item'

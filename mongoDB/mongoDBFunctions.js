@@ -12,7 +12,6 @@ export const downloadData = async () => {
     const client = await clientPromise;
     const db = await client.db();
     const data = await db.collection('tasks').find({}).toArray();
-    // const images = await JSON.parse(JSON.stringify(data));
 
     return data;
   } catch (e) {

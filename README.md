@@ -1,2 +1,3 @@
-simple app for tracking item prices 
-### puppeteer 
+simple app for tracking item prices
+
+### puppeteer
